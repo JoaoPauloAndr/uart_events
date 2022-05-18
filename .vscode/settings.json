@@ -1,9 +1,0 @@
-{
-  "C_Cpp.intelliSenseEngine": "Tag Parser",
-  "idf.adapterTargetName": "esp32c3",
-  "files.associations": {
-    "at_cmd_processing.h": "c",
-    "*.ipp": "c"
-  },
-  "cmake.configureOnOpen": true
-}
