@@ -14,11 +14,15 @@ enum input_type checkInput(char *buff, int buff_len, int* return_index)
         return Input_Error;
 
     //verificar se é comando AT
-    char at_cmd[3];
-    strncpy(at_cmd ,buff, 3);
-    int check = strcmp("AT+", at_cmd);
-    if(check != 0) 
-        return Input_Error; 
+    // char at_cmd[3];
+    // strncpy(at_cmd ,buff, 3);
+    // int check = strcmp("AT+", at_cmd);
+    // if(check != 0) 
+    //     return Input_Error;
+    if(buff[0] != 'A' && buff[1] != 'T' && buff[2] != '+')
+    {
+        return Input_Error;
+    } 
 
     int equalsIndex = getIndex(buff, '=');
     enum input_type num_code = Input_Error;

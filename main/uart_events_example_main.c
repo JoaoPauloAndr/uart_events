@@ -30,20 +30,11 @@ static const char *TAG = "uart_events";
  * - Pin assignment: TxD (default), RxD (default)
  */
 
-/**
-TODO:
-* - implementar mutex no buffer!!
-* - corrigir tratamento dados
-* - reformular at_cmd_processing 
-* - Tratar dados recebidos
-*
-*/
 
 #define EX_UART_NUM UART_NUM_0
 #define PATTERN_CHR_NUM         (3)         /*!< Set the number of consecutive and identical characters received by receiver which defines a UART pattern*/
 #define BUF_SIZE                (1024)
 #define RD_BUF_SIZE             (BUF_SIZE)
-#define FIXED_TIMER             200000
 
 static QueueHandle_t uart0_queue;
 QueueHandle_t messageQueue; 
@@ -65,10 +56,13 @@ static void process_buffer_task(void *pvParameters)
         interrupt service routine. */
         if(xQueueReceive(messageQueue, &message_received, (portTickType)portMAX_DELAY)) 
         {
+            char *msg = message_received;
             int msg_len = strlen(message_received);
+            //printf("message = %s\n", msg);
             int return_index = 0;
             int error = 0;
-            enum input_type num_code = checkInput(message_received, msg_len, &return_index);
+            enum input_type num_code = checkInput(msg, msg_len, &return_index);
+            //printf("enum = %d\n", num_code);
             switch (num_code)
             {
             case Reverse_Cmd:
